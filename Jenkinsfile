@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     echo "sudo install Apache Server"
-                   // sh 'sudo apt install apache2 -y'
+                    sh 'sudo apt install apache2 -y'
                 }
             }
         }
