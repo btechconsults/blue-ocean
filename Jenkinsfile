@@ -12,7 +12,7 @@ pipeline {
           }
         }
 
-        stage('') {
+        stage('error') {
           steps {
             git(url: 'https://github.com/btechconsults/blue-ocean.git', branch: 'main')
           }
