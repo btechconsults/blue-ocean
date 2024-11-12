@@ -29,7 +29,7 @@ pipeline {
 
     stage('Deploy WebApp') {
       steps {
-        sh 'sudo sh \'cp -R * /var/www/html/\''
+        sh 'cp -R * /var/www/html/'
       }
     }
 
