@@ -1,37 +1,39 @@
 pipeline {
-  agent any
-  stages {
-    stage('Fetch code') {
-      parallel {
-        stage('Fetch code') {
-          steps {
-            node(label: 'jenkins master') {
-              git(url: 'https://github.com/btechconsults/blue-ocean.git', branch: 'main', changelog: true, poll: true)
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Fetch the code from the repository
+                git branch: 'main', url: "https://github.com/btechconsults/web-pipeline.git"   
+				
+			}
+		}
+        stage('Install Apache Server') {
+            steps {
+                script {
+                    echo "sudo install Apache Server"
+                   // sh 'sudo apt install apache2 -y'
+                }
             }
-
-          }
         }
 
-        stage('error') {
-          steps {
-            git(url: 'https://github.com/btechconsults/blue-ocean.git', branch: 'main')
-          }
+        stage('Deploy Web Page') {
+            steps {
+                script {
+                    echo "Copy the fetched code (web page) to the Apache web directory"
+                    sh 'cp -R * /var/www/html/'
+                }
+            }
         }
-
-      }
     }
 
-    stage('install Apache server') {
-      steps {
-        sh 'echo "install apache2 server"'
-      }
+    post {
+        success {
+            echo 'Deployment was successful!'
+        }
+        failure {
+            echo 'Deployment failed. Please check the logs.'
+        }
     }
-
-    stage('Deploy WebApp') {
-      steps {
-        sh 'cp -R * /var/www/html/'
-      }
-    }
-
-  }
 }
